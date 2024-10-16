@@ -31,7 +31,7 @@ class MySqlDB:
     def execute(self,query:str,*args:tuple):
         self._connect()
         self.cur.execute(query,args)
-        self._commit()
+        self._commit(query)
         self.close()
 
     def fetchone(self,query:str,*args:tuple):

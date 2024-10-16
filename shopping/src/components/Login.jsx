@@ -86,6 +86,7 @@ function Login() {
                 <div className="card mt-5" style={{ padding: "20px", width: "450px" }}>
                   <div className="card-body">
                     <h3 className="card-title text-center">Login</h3>
+
                     <form onSubmit={readValues}>
                       <div className="form-group">
                         <label htmlFor="email">Email address</label>
@@ -101,7 +102,9 @@ function Login() {
                         />
                         {touched.email && !input.email && <div className="invalid-feedback">Email is required.</div>}
                       </div>
+
                       <br />
+
                       <div className="form-group">
                         <label htmlFor="password">Password</label>
                         <input
@@ -116,12 +119,16 @@ function Login() {
                         />
                         {touched.password && !input.password && <div className="invalid-feedback">Password is required.</div>}
                       </div>
+
                       <br />
+
                       <div className="col-12">
                         <button type="submit" className="btn btn-primary btn-block">Submit</button>
                       </div>
+
                       <br />
                       <Link className="link-opacity-75-hover" to="/register">No account? Register here</Link>
+                      
                     </form>
                     {/* {loginMessage && <p className="mt-3 text-center">{loginMessage}</p>} */}
                   </div>
