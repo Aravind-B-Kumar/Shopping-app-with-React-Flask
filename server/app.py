@@ -40,7 +40,7 @@ def login_user():
     check = db.fetchone("SELECT uid FROM login WHERE email=%s and password=%s",email,password)
 
     if not check:
-        return jsonify({"message": "Wrong"}),400
+        return jsonify({"message": "Email or password is incorrect"}),400
     
     return jsonify({"message": "login success"}),200
 

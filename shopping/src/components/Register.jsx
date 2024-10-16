@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const backgroundImageStyle = {
@@ -57,7 +58,7 @@ const Register = () => {
                                                 <button type="submit" className="btn btn-primary btn-block">Register</button>
                                             </div>
                                             <br />
-                                            <a class="link-opacity-75-hover" href="/login">Already have an account? Login</a>
+                                            <Link class="link-opacity-75-hover" to="/login">Already have an account? Login</Link>
                                         </form>
                                     </div>
                                 </div>

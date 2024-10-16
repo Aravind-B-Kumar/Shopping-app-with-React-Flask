@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 function Login() {
   const backgroundImageStyle = {
@@ -33,6 +34,7 @@ function Login() {
     password: false,
   });
 
+
   const [loginMessage, setLoginMessage] = useState("");
 
   const inputHandler = (event) => {
@@ -49,19 +51,22 @@ function Login() {
       axios.post("http://127.0.0.1:5000/loginUser", input)
         .then((response) => {
           if (response.status === 200) {
-            setLoginMessage("Login successful");
+            //setLoginMessage("Login successful");
+            alert("Successfully Logged in");
           }
         })
         .catch((error) => {
           if (error.response) {
-            setLoginMessage(error.response.data.message);
+            //setLoginMessage(error.response.data.message);
+            alert(error.response.data.message);
           } else {
-            setLoginMessage("An error occurred.");
-            console.error("There was an error!", error);
+            alert("An error occured!")
+            //setLoginMessage("An error occurred.");
           }
         });
     } else {
-      setLoginMessage("Please fill out all fields.");
+      //setLoginMessage("Please fill out all fields.");
+      alert("All the fields are required!");
     }
   };
 
@@ -114,7 +119,7 @@ function Login() {
                         <button type="submit" className="btn btn-primary btn-block">Submit</button>
                       </div>
                       <br />
-                      <a className="link-opacity-75-hover" href="/register">No account? Register here</a>
+                      <Link className="link-opacity-75-hover" to="/register">No account? Register here</Link>
                     </form>
                     {loginMessage && <p className="mt-3 text-center">{loginMessage}</p>}
                   </div>
