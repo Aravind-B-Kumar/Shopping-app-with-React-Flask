@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const backgroundImageStyle = {
@@ -35,7 +35,7 @@ function Login() {
   });
 
 
-  const [loginMessage, setLoginMessage] = useState("");
+  // const [loginMessage, setLoginMessage] = useState("");
 
   const inputHandler = (event) => {
     changeInput({ ...input, [event.target.name]: event.target.value });
@@ -45,6 +45,7 @@ function Login() {
     setTouched({ ...touched, [event.target.name]: true });
   };
 
+  const navigate = useNavigate();
   const readValues = (event) => {
     event.preventDefault();
     if (input.email && input.password) {
@@ -53,6 +54,7 @@ function Login() {
           if (response.status === 200) {
             //setLoginMessage("Login successful");
             alert("Successfully Logged in");
+            navigate("/home");
           }
         })
         .catch((error) => {
@@ -121,7 +123,7 @@ function Login() {
                       <br />
                       <Link className="link-opacity-75-hover" to="/register">No account? Register here</Link>
                     </form>
-                    {loginMessage && <p className="mt-3 text-center">{loginMessage}</p>}
+                    {/* {loginMessage && <p className="mt-3 text-center">{loginMessage}</p>} */}
                   </div>
                 </div>
               </div>
