@@ -1,16 +1,14 @@
-from flask import Flask, jsonify,  request#, session
+from flask import Flask, jsonify,  request
 from flask_cors import CORS
-#from flask_session import Session
-import random
-import string
+from flask_session import Session
 from database import MySqlDB
 
 
 db = MySqlDB()
 
-app = Flask(__name__) # directory name (built in variable for the currect module)
+app = Flask(__name__) 
+
 CORS(app,supports_credentials=True)  # corss policy violation
-#server_session = Session(app)
 
 @app.route("/homedata")
 def homedata():

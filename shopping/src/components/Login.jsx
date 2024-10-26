@@ -128,7 +128,7 @@ function Login() {
 
                       <br />
                       <Link className="link-opacity-75-hover" to="/register">No account? Register here</Link>
-                      
+
                     </form>
                     {/* {loginMessage && <p className="mt-3 text-center">{loginMessage}</p>} */}
                   </div>
