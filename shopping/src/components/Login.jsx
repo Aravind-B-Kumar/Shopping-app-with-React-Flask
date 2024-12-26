@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const backgroundImageStyle = {
@@ -35,7 +35,7 @@ function Login() {
   });
 
 
-  const [loginMessage, setLoginMessage] = useState("");
+  // const [loginMessage, setLoginMessage] = useState("");
 
   const inputHandler = (event) => {
     changeInput({ ...input, [event.target.name]: event.target.value });
@@ -45,6 +45,7 @@ function Login() {
     setTouched({ ...touched, [event.target.name]: true });
   };
 
+  const navigate = useNavigate();
   const readValues = (event) => {
     event.preventDefault();
     if (input.email && input.password) {
@@ -53,6 +54,7 @@ function Login() {
           if (response.status === 200) {
             //setLoginMessage("Login successful");
             alert("Successfully Logged in");
+            navigate("/home");
           }
         })
         .catch((error) => {
@@ -84,6 +86,7 @@ function Login() {
                 <div className="card mt-5" style={{ padding: "20px", width: "450px" }}>
                   <div className="card-body">
                     <h3 className="card-title text-center">Login</h3>
+
                     <form onSubmit={readValues}>
                       <div className="form-group">
                         <label htmlFor="email">Email address</label>
@@ -99,7 +102,9 @@ function Login() {
                         />
                         {touched.email && !input.email && <div className="invalid-feedback">Email is required.</div>}
                       </div>
+
                       <br />
+
                       <div className="form-group">
                         <label htmlFor="password">Password</label>
                         <input
@@ -114,14 +119,18 @@ function Login() {
                         />
                         {touched.password && !input.password && <div className="invalid-feedback">Password is required.</div>}
                       </div>
+
                       <br />
+
                       <div className="col-12">
                         <button type="submit" className="btn btn-primary btn-block">Submit</button>
                       </div>
+
                       <br />
                       <Link className="link-opacity-75-hover" to="/register">No account? Register here</Link>
+
                     </form>
-                    {loginMessage && <p className="mt-3 text-center">{loginMessage}</p>}
+                    {/* {loginMessage && <p className="mt-3 text-center">{loginMessage}</p>} */}
                   </div>
                 </div>
               </div>

@@ -1,5 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const backgroundImageStyle = {
@@ -23,6 +24,58 @@ const Register = () => {
         padding: "20px",  // Smaller padding for responsiveness
     };
 
+    const [input, changeInput] = useState({
+        email: "",
+        password: "",
+        repassword: ""
+    });
+
+    const [touched, setTouched] = useState({
+        email: false,
+        password: false,
+        repassword: false
+    });
+
+    const inputHandler = (event) => {
+        changeInput({ ...input, [event.target.name]: event.target.value });
+    };
+
+    const handleBlur = (event) => {
+        setTouched({ ...touched, [event.target.name]: true });
+    };
+
+    const getFieldClass = (field) => {
+        return touched[field] && !input[field] ? 'form-control is-invalid' : 'form-control';
+    };
+
+    const navigate = useNavigate();
+
+    const readValues = (event) => {
+        event.preventDefault();
+        if (input.email && input.password && input.repassword) {
+            axios.post("http://127.0.0.1:5000/registerUser", input)
+                .then((response) => {
+                    if (response.status === 200) {
+                        //setLoginMessage("Login successful");
+                        alert(response.data.message);
+                        navigate("/login");
+                    }
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        //setLoginMessage(error.response.data.message);
+                        alert(error.response.data.message);
+                    } else {
+                        alert("An error occured!")
+                        //setLoginMessage("An error occurred.");
+                    }
+                });
+        } else {
+            //setLoginMessage("Please fill out all fields.");
+            alert("All the fields are required!");
+        }
+    };
+
     return (
         <div style={backgroundImageStyle}>
             <div style={containerStyle}>
@@ -35,22 +88,56 @@ const Register = () => {
                                 <div className="card mt-5" style={{ padding: "20px", width: "450px" }}>
                                     <div className="card-body">
                                         <h3 className="card-title text-center">Register</h3>
-                                        <form>
+
+                                        <form onSubmit={readValues}>
+
                                             <div className="form-group">
                                                 <label htmlFor="email">Email address</label>
-                                                <input type="email" className="form-control" id="email" placeholder="Enter Email" />
+                                                <input
+                                                    type="text"
+                                                    name="email"
+                                                    className={getFieldClass('email')}
+                                                    id="email"
+                                                    placeholder="Enter Email"
+                                                    value={input.email}
+                                                    onChange={inputHandler}
+                                                    onBlur={handleBlur}
+                                                />
+                                                {touched.email && !input.email && <div className="invalid-feedback">Email is required.</div>}
                                             </div>
 
                                             <br />
+
                                             <div className="form-group">
                                                 <label htmlFor="password">Password</label>
-                                                <input type="password" className="form-control" id="password" placeholder="Password" />
+                                                <input
+                                                    type="password"
+                                                    name="password"
+                                                    className={getFieldClass('password')}
+                                                    id="password"
+                                                    placeholder="Password"
+                                                    value={input.password}
+                                                    onChange={inputHandler}
+                                                    onBlur={handleBlur}
+                                                />
+                                                {touched.password && !input.password && <div className="invalid-feedback">Password is required.</div>}
                                             </div>
 
                                             <br />
+
                                             <div className="form-group">
                                                 <label htmlFor="password">Confirm Password</label>
-                                                <input type="password" className="form-control" id="password" placeholder="Confirm Password" />
+                                                <input
+                                                    type="password"
+                                                    name="repassword"
+                                                    className={getFieldClass('repassword')}
+                                                    id="repassword"
+                                                    placeholder="Confirm Password"
+                                                    value={input.repassword}
+                                                    onChange={inputHandler}
+                                                    onBlur={handleBlur}
+                                                />
+                                                {touched.password && !input.password && <div className="invalid-feedback">Password is required.</div>}
                                             </div>
 
                                             <br />
@@ -60,6 +147,7 @@ const Register = () => {
                                             <br />
                                             <Link class="link-opacity-75-hover" to="/login">Already have an account? Login</Link>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
