@@ -54,7 +54,13 @@ function Login() {
           if (response.status === 200) {
             //setLoginMessage("Login successful");
             alert("Successfully Logged in");
-            navigate("/home");
+            axios.get(`http://localhost:5000/set/${input.email}`,{ withCredentials: true })
+            .then(()=> {
+              navigate("/home");
+            }).catch((error) => { 
+              console.error('Error setting session:', error); 
+            });
+            
           }
         })
         .catch((error) => {
